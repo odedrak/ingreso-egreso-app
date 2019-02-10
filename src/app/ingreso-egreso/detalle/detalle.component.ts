@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AppState } from 'src/app/app.reducer';
 import { Store } from '@ngrx/store';
 import { IngresoEgreso } from '../ingreso-egreso.model';
 import { Subscription } from 'rxjs';
 import { IngresoEgresoService } from '../ingreso-egreso.service';
 import Swal from 'sweetalert2';
+
+// Al usar lazyload (forfeature) hay que usar el estado extendido que tiene el campo que necesitamos
+// import { AppState } from 'src/app/app.reducer';
+import * as fromIngresoEgreso from '../ingreso-egreso.reducer';
 
 @Component({
   selector: 'app-detalle',
@@ -16,7 +19,7 @@ export class DetalleComponent implements OnInit, OnDestroy {
   items: IngresoEgreso[];
   subscripcion: Subscription = new Subscription();
 
-  constructor(private store: Store<AppState>, public ingresoEgresoService: IngresoEgresoService) { }
+  constructor(private store: Store<fromIngresoEgreso.AppState>, public ingresoEgresoService: IngresoEgresoService) { }
 
   ngOnInit() {
     this.subscripcion = this.store.select('ingresoEgreso').subscribe(ingresoEgreso => {

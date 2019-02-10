@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
 import { Subscription } from 'rxjs';
 import { IngresoEgreso } from '../ingreso-egreso.model';
+
+// Al usar lazyload (forfeature) hay que usar el estado extendido que tiene el campo que necesitamos
+// import { AppState } from 'src/app/app.reducer';
+import * as fromIngresoEgreso from '../ingreso-egreso.reducer';
 
 @Component({
   selector: 'app-estadistica',
@@ -21,7 +24,7 @@ export class EstadisticaComponent implements OnInit {
   public doughnutChartData: number[] = [];
 
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<fromIngresoEgreso.AppState>) { }
 
   ngOnInit() {
     this.suscription = this.store.select('ingresoEgreso').subscribe(ingresoEgreso => {
